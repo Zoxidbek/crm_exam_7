@@ -1,6 +1,6 @@
 import { StudentService } from './student.service';
-import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
+import { CreateStudentDto } from '../dto/create-student.dto';
+import { UpdateStudentDto } from '../dto/update-student.dto';
 export declare class StudentController {
     private readonly studentService;
     constructor(studentService: StudentService);
@@ -11,6 +11,10 @@ export declare class StudentController {
         message: string;
     }>;
     remove(id: string): Promise<{
+        message: string;
+    }>;
+    getStatistics(): Promise<any>;
+    leftStudent(id: string): Promise<{
         message: string;
     }>;
 }

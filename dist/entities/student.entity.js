@@ -21,6 +21,8 @@ let Student = class Student {
     img;
     createdAt;
     updatedAt;
+    joinedAt;
+    leftAt;
 };
 exports.Student = Student;
 __decorate([
@@ -59,6 +61,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Student.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }),
+    __metadata("design:type", Date)
+], Student.prototype, "joinedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', nullable: true }),
+    __metadata("design:type", Object)
+], Student.prototype, "leftAt", void 0);
 exports.Student = Student = __decorate([
     (0, typeorm_1.Entity)('student')
 ], Student);

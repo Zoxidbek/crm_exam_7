@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
+import { CreateStudentDto } from '../dto/create-student.dto';
+import { UpdateStudentDto } from '../dto/update-student.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Student } from 'src/entities/student.entity';
 import { Repository } from 'typeorm';
@@ -41,4 +41,26 @@ async findAll(): Promise<Student[]> {
     await this.studentRepo.remove(students)
     return {message: "Deleted"}
   }
+
+      async getStatistics() {
+    const result = await this.studentRepo.query(`SELECT DATE_TRUNC('month', "joinedAt") AS month,
+        COUNT(id) AS "totalJoined", SUM(CASE WHEN "leftAt" IS NOT NULL THEN 1 ELSE 0 END) AS "leftCount" 
+        FROM student 
+        GROUP BY DATE_TRUNC('month', "joinedAt")
+        ORDER BY month ASC;
+    `);
+
+    return result;
+  }
+
+    async leftStudent(id: number): Promise<{ message: string }> {
+    const student = await this.studentRepo.findOneBy({ id });
+    if (!student) throw new NotFoundException('student not found');
+
+    student.leftAt = new Date();
+    await this.studentRepo.save(student);
+
+    return { message: 'left time added' };
+  }
+
 }

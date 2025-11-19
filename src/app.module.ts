@@ -4,22 +4,22 @@ import { StudentModule } from "./student/student.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { APP_PIPE } from "@nestjs/core";
 import { ValidationPipe } from "./validation/validation.pipe";
-import { ThrottlerModule } from "@nestjs/throttler";
+import { Student } from "./entities/student.entity";
+
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      username: "postgres",
-      password: "20080930",
-      database: "exam_project",
-      host: "localhost",
-      port: 5432,
-      autoLoadEntities: true,
-      synchronize: true,
-      logging: false,
-    }),
+TypeOrmModule.forRoot({
+  type: 'postgres',
+host: process.env.DB_HOST || (process.env.DOCKERIZED ? 'postgres' : 'localhost'),
+  port: Number(process.env.PG_PORT) || 5432,
+  username: 'postgres',
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
+  autoLoadEntities: true,
+  synchronize: true,
+}),
     StudentModule
   ],
   controllers: [],

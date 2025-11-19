@@ -1,5 +1,5 @@
-import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
+import { CreateStudentDto } from '../dto/create-student.dto';
+import { UpdateStudentDto } from '../dto/update-student.dto';
 import { Student } from 'src/entities/student.entity';
 import { Repository } from 'typeorm';
 export declare class StudentService {
@@ -12,6 +12,10 @@ export declare class StudentService {
         message: string;
     }>;
     remove(id: number): Promise<{
+        message: string;
+    }>;
+    getStatistics(): Promise<any>;
+    leftStudent(id: number): Promise<{
         message: string;
     }>;
 }

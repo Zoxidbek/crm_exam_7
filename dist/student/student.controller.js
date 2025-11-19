@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentController = void 0;
 const common_1 = require("@nestjs/common");
 const student_service_1 = require("./student.service");
-const create_student_dto_1 = require("./dto/create-student.dto");
-const update_student_dto_1 = require("./dto/update-student.dto");
+const create_student_dto_1 = require("../dto/create-student.dto");
+const update_student_dto_1 = require("../dto/update-student.dto");
 let StudentController = class StudentController {
     studentService;
     constructor(studentService) {
@@ -36,6 +36,12 @@ let StudentController = class StudentController {
     }
     async remove(id) {
         return this.studentService.remove(+id);
+    }
+    getStatistics() {
+        return this.studentService.getStatistics();
+    }
+    leftStudent(id) {
+        return this.studentService.leftStudent(+id);
     }
 };
 exports.StudentController = StudentController;
@@ -74,6 +80,19 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)("get_statistics"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], StudentController.prototype, "getStatistics", null);
+__decorate([
+    (0, common_1.Patch)("left_student/:id"),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], StudentController.prototype, "leftStudent", null);
 exports.StudentController = StudentController = __decorate([
     (0, common_1.Controller)('student'),
     __metadata("design:paramtypes", [student_service_1.StudentService])

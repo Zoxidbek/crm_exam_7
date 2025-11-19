@@ -50,6 +50,23 @@ let StudentService = class StudentService {
         await this.studentRepo.remove(students);
         return { message: "Deleted" };
     }
+    async getStatistics() {
+        const result = await this.studentRepo.query(`SELECT DATE_TRUNC('month', "joinedAt") AS month,
+        COUNT(id) AS "totalJoined", SUM(CASE WHEN "leftAt" IS NOT NULL THEN 1 ELSE 0 END) AS "leftCount" 
+        FROM student 
+        GROUP BY DATE_TRUNC('month', "joinedAt")
+        ORDER BY month ASC;
+    `);
+        return result;
+    }
+    async leftStudent(id) {
+        const student = await this.studentRepo.findOneBy({ id });
+        if (!student)
+            throw new common_1.NotFoundException('student not found');
+        student.leftAt = new Date();
+        await this.studentRepo.save(student);
+        return { message: 'left time added' };
+    }
 };
 exports.StudentService = StudentService;
 exports.StudentService = StudentService = __decorate([

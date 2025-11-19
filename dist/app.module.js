@@ -21,15 +21,14 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
             typeorm_1.TypeOrmModule.forRoot({
-                type: "postgres",
-                username: "postgres",
-                password: "20080930",
-                database: "exam_project",
-                host: "localhost",
-                port: 5432,
+                type: 'postgres',
+                host: process.env.DB_HOST || (process.env.DOCKERIZED ? 'postgres' : 'localhost'),
+                port: Number(process.env.PG_PORT) || 5432,
+                username: 'postgres',
+                password: process.env.POSTGRES_PASSWORD,
+                database: process.env.POSTGRES_DB,
                 autoLoadEntities: true,
                 synchronize: true,
-                logging: false,
             }),
             student_module_1.StudentModule
         ],

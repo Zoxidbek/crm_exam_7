@@ -8,4 +8,6 @@ export declare class Student {
     img: string;
     createdAt: Date;
     updatedAt: Date;
+    joinedAt: Date;
+    leftAt: Date | null;
 }

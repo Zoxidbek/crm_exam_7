@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 @Entity('student')
 export class Student {
   @PrimaryGeneratedColumn()
@@ -28,5 +27,12 @@ export class Student {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  joinedAt: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  leftAt: Date | null;
+
 }
 
